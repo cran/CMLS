@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+
+import(quadprog)
+import(parallel)
+
+importFrom("stats", "quantile")
+importFrom("utils", "setTxtProgressBar", "txtProgressBar")
