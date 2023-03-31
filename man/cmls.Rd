@@ -12,7 +12,7 @@ subject to the specified constraints on the rows of \code{B}.
 }
 \usage{
 cmls(X, Y, const = "uncons", struc = NULL, 
-     df = 10, degree = 3, intercept = TRUE,
+     z = NULL, df = 10, degree = 3, intercept = TRUE,
      backfit = FALSE, maxit = 1e3, eps = 1e-10, 
      del = 1e-6, XtX = NULL, mode.range = NULL)
 }
@@ -22,6 +22,7 @@ cmls(X, Y, const = "uncons", struc = NULL,
   \item{Y}{Matrix of dimension \eqn{n} x \eqn{m}.}
   \item{const}{Constraint code. See \code{\link{const}} for the 24 available options.}
   \item{struc}{Structural constraints (defaults to unstructured). See Note.}
+  \item{z}{Predictor values for the spline basis (for smoothness constraints). See Note.}
   \item{df}{Degrees of freedom for the spline basis (for smoothness constraints). See Note.}
   \item{degree}{Polynomial degree for the spline basis (for smoothness constraints). See Note.}
   \item{intercept}{Logical indicating whether the spline basis should contain an intercept (for smoothness constraints). See Note.}
@@ -43,13 +44,13 @@ where \code{B.old} and \code{B.new} denote the parameter estimates at iterations
 Returns the estimated matrix \code{B} with attribute "df" (degrees of freedom), which gives the df for each row of \code{B}.
 }
 \references{
-Goldfarb, D., & Idnani, A. (1983). A numerically stable dual method for solving strictly convex quadratic programs. Mathematical Programming, 27, 1-33.
+Goldfarb, D., & Idnani, A. (1983). A numerically stable dual method for solving strictly convex quadratic programs. Mathematical Programming, 27, 1-33. \doi{10.1007/BF02591962}
 
 Helwig, N. E. (in prep). Constrained multivariate least squares in R.
 
 Ten Berge, J. M. F. (1993). Least Squares Optimization in Multivariate Analysis. Volume 25 of M & T Series. DSWO Press, Leiden University. ISBN: 9789066950832
 
-Turlach, B. A., & Weingessel, A. (2013). quadprog: Functions to solve Quadratic Programming Problems. R package version 1.5-5. https://CRAN.R-project.org/package=quadprog
+Turlach, B. A., & Weingessel, A. (2019). quadprog: Functions to solve Quadratic Programming Problems. R package version 1.5-8. https://CRAN.R-project.org/package=quadprog
 }
 \author{
 Nathaniel E. Helwig <helwig@umn.edu>
@@ -57,7 +58,7 @@ Nathaniel E. Helwig <helwig@umn.edu>
 \note{
 Structure constraints (\code{struc}) should be specified with a \eqn{p} x \eqn{m} matrix of logicals (TRUE/FALSE), such that FALSE elements indicate a weight should be constrained to be zero. Default uses unstructured weights, i.e., a \eqn{p} x \eqn{m} matrix of all TRUE values.
 
-Inputs \code{df}, \code{degree}, and \code{intercept} are only applicable when using one of the 12 constraints that involves a spline basis, i.e., "smooth", "smonon", "smoper", "smpeno", "ortsmo", "orsmpe", "monsmo", "mosmno", "unismo", "unsmno", "unsmpe", "unsmpn".
+Inputs \code{z}, \code{df}, \code{degree}, and \code{intercept} are only applicable when using one of the 12 constraints that involves a spline basis, i.e., "smooth", "smonon", "smoper", "smpeno", "ortsmo", "orsmpe", "monsmo", "mosmno", "unismo", "unsmno", "unsmpe", "unsmpn".
 
 Input \code{mode.range} is only applicable when using one of the 8 constraints that enforces unimodality: "unimod", "uninon", "uniper", "unpeno", "unismo", "unsmno", "unsmpe", "unsmpn". Mode search ranges (\code{mode.range}) should be specified with a 2 x \eqn{p} matrix of integers such that 
 

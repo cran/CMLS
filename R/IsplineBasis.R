@@ -1,5 +1,5 @@
 IsplineBasis <-
-  function(x, df = NULL, knots = NULL, degree = 2, intercept = FALSE, 
+  function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE, 
            Boundary.knots = range(x)){
     
     # is intercept needed?
@@ -13,7 +13,7 @@ IsplineBasis <-
     
     # get needed M-spline basis
     if(!is.null(df)) df <- df + 1L
-    degree <- degree + 1L
+    #degree <- degree + 1L
     Xmat <- MsplineBasis(x = x, df = df, knots = knots, degree = degree,
                          intercept = TRUE, Boundary.knots = Boundary.knots)
     

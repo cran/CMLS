@@ -24,9 +24,9 @@ cv.cmls(X, Y, nfolds = 2, foldid = NULL, parameters = NULL,
   \item{intercept}{Parameters for tuning. Logical vector specifying intercepts for tuning. See Details.}
   \item{mse}{If \code{TRUE} (default), the mean squared error is used as the CV loss function. Otherwise the mean absolute error is used.}
   \item{parallel}{Logical indicating if \code{\link{parSapply}} should be used. See Examples.}
-  \item{cl}{Cluster created by \code{\link{makeCluster}}. Only used when \code{parallel = TRUE}.}
+  \item{cl}{Cluster created by \code{\link{makeCluster}}. Only used when \code{parallel = TRUE}. Recommended usage: \code{cl = makeCluster(detectCores())}}
   \item{verbose}{If \code{TRUE}, tuning progress is printed via \code{\link{txtProgressBar}}. Ignored if \code{parallel = TRUE}.}
-  \item{...}{Additional arguments to the \code{\link{cmls}} function, e.g., \code{struc}, \code{backfit}, etc.}
+  \item{...}{Additional arguments to the \code{\link{cmls}} function, e.g., \code{z}, \code{struc}, \code{backfit}, etc.}
 }
   
 \details{
@@ -81,7 +81,7 @@ kcv$top5.parameters
 plot(kcv$full.parameters$df, kcv$full.parameters$cvloss, t = "b")
 
 
-\donttest{
+\dontrun{
 
 # sample foldid for 5-fold CV
 set.seed(2)
@@ -103,7 +103,7 @@ kcv$top5.parameters
 #             using parallel package for parallel computations
 myconst <- as.character(const(print = FALSE)$label[-c(13:16)])
 system.time({
-   cl <- makeCluster(detectCores())
+   cl <- makeCluster(2L)  # using 2 cores
    kcv <- cv.cmls(X = Xmat, Y = Ymat, foldid = foldid,
                   const = myconst, df = 5:15,
                   parallel = TRUE, cl = cl)
@@ -128,7 +128,7 @@ kcv$top5.parameters
 #             using parallel package for parallel computations
 myconst <- as.character(const(print = FALSE)$label[-c(13:16)])
 system.time({
-  cl <- makeCluster(detectCores())
+  cl <- makeCluster(2L)  # using 2 cores
   kcv <- cv.cmls(X = Xmat, Y = Ymat, foldid = foldid,
                  const = myconst, df = 5:15, struc = struc,
                  parallel = TRUE, cl = cl)
@@ -137,7 +137,7 @@ system.time({
 kcv$best.parameters
 kcv$top5.parameters
 
-} % end donttest
+} % end dontrun
 
 }
 

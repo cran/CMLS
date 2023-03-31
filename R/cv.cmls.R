@@ -4,7 +4,7 @@ cv.cmls <-
            mse = TRUE, parallel = FALSE, cl = NULL, verbose = TRUE, ...){
     # k-fold Cross-Validation for cmls.R
     # Nathaniel E. Helwig (helwig@umn.edu)
-    # last updated: June 3, 2018
+    # last updated: March 28, 2023
     
     # check inputs
     X <- as.matrix(X)
@@ -31,8 +31,13 @@ cv.cmls <-
     
     # check parallel and cl
     if(parallel && !any(class(cl) == "cluster")) {
-      stop("Input 'cl' must be cluster (created by makeCluster) when parallel=TRUE \n  See examples in documentation:  ?cv_cmls")
+      stop("Input 'cl' must be cluster (created by makeCluster) when parallel=TRUE \n  See examples in documentation:  ?cv.cmls")
     }
+    
+    # check verbose
+    verbose <- as.logical(verbose[1])
+    if(!any(verbose == c(TRUE, FALSE))) stop("Input 'verbose' must be TRUE or FALSE")
+    if(!interactive()) verbose <- FALSE
     
     # parameters for cv tuning
     if(is.null(parameters)){

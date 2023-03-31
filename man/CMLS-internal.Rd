@@ -1,12 +1,10 @@
 \name{CMLS-internal}
 
 %% List of Internal Functions Called
-\alias{IsplineBasis}
 \alias{gcvfun}
 \alias{kcvmae}
 \alias{kcvmse}
 \alias{list2bdiag}
-\alias{MsplineBasis}
 \alias{PseudoInverse}
 \alias{rsinvsqrt}
 \alias{solveQP}

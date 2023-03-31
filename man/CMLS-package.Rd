@@ -21,13 +21,13 @@ The \code{\link{cmls}} function provides a user-friendly interface for solving t
 Maintainer: \packageMaintainer{CMLS}
 }
 \references{
-Goldfarb, D., & Idnani, A. (1983). A numerically stable dual method for solving strictly convex quadratic programs. Mathematical Programming, 27, 1-33.
+Goldfarb, D., & Idnani, A. (1983). A numerically stable dual method for solving strictly convex quadratic programs. Mathematical Programming, 27, 1-33. \doi{10.1007/BF02591962}
 
 Helwig, N. E. (in prep). Constrained multivariate least squares in R.
 
 Ten Berge, J. M. F. (1993). Least Squares Optimization in Multivariate Analysis. Volume 25 of M & T Series. DSWO Press, Leiden University. ISBN: 9789066950832
 
-Turlach, B. A., & Weingessel, A. (2013). quadprog: Functions to solve Quadratic Programming Problems. R package version 1.5-5. https://CRAN.R-project.org/package=quadprog
+Turlach, B. A., & Weingessel, A. (2019). quadprog: Functions to solve Quadratic Programming Problems. R package version 1.5-8. https://CRAN.R-project.org/package=quadprog
 }
 \keyword{ package }
 \examples{

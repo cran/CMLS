@@ -1,0 +1,13 @@
+Changes from ver 1.0-0 to ver 1.0-1  (2023-03-29)
+
+1) Improvements to "cmls" when using smoothness constraints
+	* New argument 'z' allows for user-specified predictor values for splines
+	* Previously assumed equal predictor values, i.e., z = seq(0, 1, length.out = m)
+
+2) Added documentation for spline basis generating functions
+	* MsplineBasis creates design matrix for M-splines
+	* IsplineBasis creates design matrix for I-splines
+
+3) Various compatibility fixes
+	* txtProgressBar() now used only if interactive() is TRUE
+	* two cores now used in parallel computing example: makeCluster(2L)

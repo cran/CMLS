@@ -1,11 +1,11 @@
 cmls <- 
   function(X, Y, const = "uncons", struc = NULL, 
-           df = 10, degree = 3, intercept = TRUE, 
+           z = NULL, df = 10, degree = 3, intercept = TRUE, 
            backfit = FALSE, maxit = 1e3, eps = 1e-10, 
            del = 1e-6, XtX = NULL, mode.range = NULL){
     # Constrained Multivariate Least Squares
     # Nathaniel E. Helwig (helwig@umn.edu)
-    # last updated: June 2, 2018
+    # last updated: March 31, 2021
     
     # Finds the B that minimizes:  sum( ( Y - X %*% B )^2 )
     # subject to specified constraints on rows of B
@@ -96,6 +96,14 @@ cmls <-
                       "ortsmo", "orsmpe", "monsmo", "mosmno", 
                       "unismo", "unsmno", "unsmpe", "unsmpn")
     if(any(const == const.smooth)){
+      
+      # check z
+      if(is.null(z)){
+        z <- seq(0, 1, length.out = m)
+      } else {
+        z <- as.numeric(z)
+        if(length(z) != m) stop("Inputs 'Y' and 'z' are incompatible:\nNeed ncol(Y) == length(z)")
+      }
       
       # check df
       df <- as.integer(df[1])
@@ -241,9 +249,10 @@ cmls <-
     # smooth or smoper: unstructured or structured
     if(any(const == c("smooth", "smoper"))){
       periodic <- ifelse(const == "smoper", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        #Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        Z <- MsplineBasis(x = z, df = df, degree = degree, intercept = intercept)
         Z <- scale(Z, center = FALSE)
         if(periodic){
           A <- t(Z[m,,drop=FALSE] - Z[1,,drop=FALSE])
@@ -261,7 +270,8 @@ cmls <-
         Amat <- Zmat <- vector("list", p)
         meq <- rep(1, p)
         for(jj in 1:p){
-          zjj <- zindx[struc[jj,]]
+          #zjj <- zindx[struc[jj,]]
+          zjj <- z[struc[jj,]]
           ndf <- max(round(df * length(zjj) / m), mindf)
           Z <- matrix(0, nrow = m, ncol = ndf)
           Z[struc[jj,],] <- MsplineBasis(x = zjj, df = ndf, degree = degree, intercept = intercept)
@@ -288,9 +298,10 @@ cmls <-
     # smonon or smpeno: unstructured or structured
     if(any(const == c("smonon", "smpeno"))){
       periodic <- ifelse(const == "smpeno", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        #Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        Z <- MsplineBasis(x = z, df = df, degree = degree, intercept = intercept)
         Z <- scale(Z, center = FALSE)
         A <- t(Z)
         meq <- as.integer(periodic)
@@ -304,7 +315,8 @@ cmls <-
         Amat <- Zmat <- vector("list", p)
         meq <- rep(as.integer(periodic), p)
         for(jj in 1:p){
-          zjj <- zindx[struc[jj,]]
+          #zjj <- zindx[struc[jj,]]
+          zjj <- z[struc[jj,]]
           ndf <- max(round(df * length(zjj) / m), mindf)
           Z <- matrix(0, nrow = m, ncol = ndf)
           Z[struc[jj,],] <- MsplineBasis(x = zjj, df = ndf, degree = degree, intercept = intercept)
@@ -386,9 +398,11 @@ cmls <-
     # ortsmo or orsmpe: unstructured and structured
     if(any(const == c("ortsmo","orsmpe"))){
       periodic <- ifelse(const == "orsmpe", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- MsplineBasis(x = zindx, df = df, degree = degree, 
+        # Z <- MsplineBasis(x = zindx, df = df, degree = degree, 
+        #                   intercept = intercept, periodic = periodic)
+        Z <- MsplineBasis(x = z, df = df, degree = degree, 
                           intercept = intercept, periodic = periodic)
         Z <- scale(Z, center = FALSE)
         Zsvd <- svd(Z)
@@ -452,9 +466,10 @@ cmls <-
     # monsmo and mosmno: unstructured or structured
     if(any(const == c("monsmo", "mosmno"))){
       nonneg <- ifelse(const == "mosmno", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- IsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        #Z <- IsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        Z <- IsplineBasis(x = z, df = df, degree = degree, intercept = intercept)
         A <- t(Z[2:m,] - Z[1:(m-1),])
         if(nonneg) A <- cbind(Z[1,], A)
         B <- mlsei(X = X, Y = Y, Z = Z, A = A, backfit = backfit,
@@ -465,7 +480,8 @@ cmls <-
       } else {
         Amat <- Zmat <- vector("list", p)
         for(jj in 1:p){
-          zjj <- zindx[struc[jj,]]
+          #zjj <- zindx[struc[jj,]]
+          zjj <- z[struc[jj,]]
           ndf <- max(round(df * length(zjj) / m), mindf)
           Z <- matrix(0, nrow = m, ncol = ndf)
           Z[struc[jj,],] <- IsplineBasis(x = zjj, df = ndf, degree = degree, intercept = intercept)
@@ -623,9 +639,10 @@ cmls <-
     # unismo and unsmpe: unstructured or structured
     if(any(const == c("unismo", "unsmpe"))){
       periodic <- ifelse(const == "unsmpe", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        #Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        Z <- MsplineBasis(x = z, df = df, degree = degree, intercept = intercept)
         Z <- scale(Z, center = FALSE)
         if(periodic){
           A <- t(Z[m,,drop=FALSE] - Z[1,,drop=FALSE])
@@ -643,7 +660,8 @@ cmls <-
         Amat <- Zmat <- vector("list", p)
         meq <- rep(1, p)
         for(jj in 1:p){
-          zjj <- zindx[struc[jj,]]
+          #zjj <- zindx[struc[jj,]]
+          zjj <- z[struc[jj,]]
           ndf <- max(round(df * length(zjj) / m), mindf)
           Z <- matrix(0, nrow = m, ncol = ndf)
           Z[struc[jj,],] <- MsplineBasis(x = zjj, df = ndf, degree = degree, intercept = intercept)
@@ -671,9 +689,10 @@ cmls <-
     # unsmno and unsmpn: unstructured or structured
     if(any(const == c("unsmno","unsmpn"))){
       periodic <- ifelse(const == "unsmpn", TRUE, FALSE)
-      zindx <- seq(0, 1, length.out = m)
+      #zindx <- seq(0, 1, length.out = m)
       if(is.null(struc)){
-        Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        #Z <- MsplineBasis(x = zindx, df = df, degree = degree, intercept = intercept)
+        Z <- MsplineBasis(x = z, df = df, degree = degree, intercept = intercept)
         Z <- scale(Z, center = FALSE)
         A <- t(Z[c(1,m),])
         meq <- as.integer(periodic)
@@ -687,7 +706,8 @@ cmls <-
         Amat <- Zmat <- vector("list", p)
         meq <- rep(as.integer(periodic), p)
         for(jj in 1:p){
-          zjj <- zindx[struc[jj,]]
+          #zjj <- zindx[struc[jj,]]
+          zjj <- z[struc[jj,]]
           ndf <- max(round(df * length(zjj) / m), mindf)
           Z <- matrix(0, nrow = m, ncol = ndf)
           Z[struc[jj,],] <- MsplineBasis(x = zjj, df = ndf, degree = degree, intercept = intercept)
