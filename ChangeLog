@@ -1,3 +1,13 @@
+Changes from ver 1.0-1 to ver 1.1  (2025-10-08)
+
+1) Updates to package DESCRIPTION file
+	* Added "Authors@R" filed (instead of Author/Maintainer)
+
+2) Updates to package documentation (help) files
+	* Added target package (solve.QP) for \link{} calls
+
+
+
 Changes from ver 1.0-0 to ver 1.0-1  (2023-03-29)
 
 1) Improvements to "cmls" when using smoothness constraints

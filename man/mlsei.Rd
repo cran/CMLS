@@ -31,7 +31,7 @@ mlsei(X, Y, Z, A, b, meq,
   \item{XtX}{Crossproduct matrix:  \code{XtX = crossprod(X)}.}
   \item{ZtZ}{Crossproduct matrix:  \code{ZtZ = crossprod(Z)}.}
   \item{simplify}{If \code{Z} is a list, should \code{B} be returned as a matrix (if possible)? See Note.}
-  \item{catchError}{If \code{catchError = FASLE}, an error induced by \code{\link{solve.QP}} will be returned. Otherwise \code{\link{tryCatch}} will be used in attempt to catch the error.}
+  \item{catchError}{If \code{catchError = FASLE}, an error induced by \code{\link[quadprog]{solve.QP}} will be returned. Otherwise \code{\link{tryCatch}} will be used in attempt to catch the error.}
 
 }
 \details{

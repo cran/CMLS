@@ -1,5 +1,5 @@
-e3904256fe0f842cfcd2ef05d2ca2236 *ChangeLog
-f1f34e012fb9383fa45315f31577504a *DESCRIPTION
+ac66536ce9ac9890524c8df21165b8f7 *ChangeLog
+8254c5f3ad2dbd070be6b09c61284893 *DESCRIPTION
 955ed3668bc25b1e9c1e03f9c3c29f18 *NAMESPACE
 6eab268d5fa6fd882d43df609537a4f6 *R/IsplineBasis.R
 53bdd3195454efca771c11b529d91db8 *R/MsplineBasis.R
@@ -16,7 +16,7 @@ c8f1b26fc530ddf5295fd54d963c637c *R/mlsun.R
 174bfe6106effee6d4e0150aa3a5e59d *R/rsinvsqrt.R
 650ef1fc3ab169f9a1ae64d09467f462 *R/solveQP.R
 354c79f9210296cdcbebe3dc7d985896 *R/solveQPerror.R
-25e7dd966cfe76897f63a20d658202a8 *build/partial.rdb
+3b6b6881d572258d1f02f23cadcda6c3 *build/partial.rdb
 129faafb2774ceb6f32f3ad3c49f99ec *man/CMLS-internal.Rd
 1cc96d6be130085a6fc6e04374f827e9 *man/CMLS-package.Rd
 0f9e2405bd8f364ec076b31ffcc8c2e5 *man/IsplineBasis.Rd
@@ -24,5 +24,5 @@ c8f1b26fc530ddf5295fd54d963c637c *R/mlsun.R
 1c6e3f085b210f1ab04821dcb4d3b82c *man/cmls.Rd
 f07a33c0fc7259d7af4cd655c70c0031 *man/const.Rd
 e9cbe00191ac81450985801ba63b9aa7 *man/cv.cmls.Rd
-bd2e7a10c923cecea60b7de80a45028b *man/mlsei.Rd
-ef5338ee948983d58e56724781f35934 *man/mlsun.Rd
+75de13fe553297d6d60100755b8548a2 *man/mlsei.Rd
+b408f3490b88da4e59618053445ba42f *man/mlsun.Rd
